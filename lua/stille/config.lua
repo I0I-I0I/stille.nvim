@@ -3,7 +3,7 @@ local M = {}
 ---@class StilleConfig
 ---@field transparent? boolean
 ---@field terminal_colors? boolean
----@field color_overrides? table<string, string>
+---@field color_overrides? table<string, table>
 ---@field comment_italic? boolean
 ---@field guicursor? string|boolean
 

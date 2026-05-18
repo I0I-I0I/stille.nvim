@@ -3,48 +3,13 @@ local palette = require("stille.palette")
 
 ---@alias StilleGroup string
 
----@class StilleHighlightOpts: vim.api.keyset.highlight
-
----@class StillePalette
----@field bg string
----@field fg string
----@field comment string
----@field keyword string
----@field type string
----@field string string
----@field constant? string
----@field func? string
----@field number? string
----@field operator? string
----@field cursor string
----@field cursorline string
----@field git_add string
----@field git_delete string
----@field git_change string
----@field git_add_bg string
----@field git_delete_bg string
----@field git_change_bg string
----@field git_text_bg string
----@field error string
----@field warning string
----@field info string
----@field hint string
----@field ok string
----@field black string
----@field red string
----@field green string
----@field yellow string
----@field blue string
----@field magenta string
----@field cyan string
----@field white string
+---@alias StilleHighlightOpts vim.api.keyset.highlight
 
 ---@class StilleVariant
 ---@field name string
 ---@field background? string
 ---@field palette StillePalette
 ---@field terminal_colors? boolean
----@field comment_italic? boolean
 ---@field guicursor? string|boolean
 
 ---@class StilleGroupSpec
@@ -76,37 +41,44 @@ end
 ---@type fun(ns_id: integer, name: string, val: vim.api.keyset.highlight)
 local set = vim.api.nvim_set_hl
 
+---@param base table
+---@param override table
+---@return table
+local function merge(base, override)
+    return vim.tbl_deep_extend("force", base or {}, override or {})
+end
+
 ---@param variant StilleVariant
----@return string
+---@return string|integer|nil
 local function normal_bg(variant)
-    return variant.palette.bg
+    return variant.palette.main.bg
 end
 
 ---@param variant StilleVariant
----@return string
+---@return string|integer|nil
 local function menu_bg(variant)
-    if variant.palette.bg == "NONE" then
-        return variant.palette.cursorline
+    if variant.palette.main.bg == "NONE" then
+        return variant.palette.cursorline.bg
     end
 
-    return variant.palette.bg
+    return variant.palette.main.bg
 end
 
 ---@param variant StilleVariant
----@return string
+---@return string|integer|nil
 local function cursor_fg(variant)
-    if variant.palette.bg == "NONE" then
-        return variant.palette.cursorline
+    if variant.palette.main.bg == "NONE" then
+        return variant.palette.cursorline.bg
     end
 
-    return variant.palette.bg
+    return variant.palette.main.bg
 end
 
 ---@type StilleGroupSpec[]
 local highlight_groups = {
     {
         style = function(variant)
-            return { fg = variant.palette.error, bold = true }
+            return merge(variant.palette.error, { bold = true })
         end,
         groups = {
             "DiagnosticError",
@@ -116,7 +88,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.warning, bold = true }
+            return merge(variant.palette.warning, { bold = true })
         end,
         groups = {
             "DiagnosticWarn",
@@ -126,7 +98,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.info, bold = true }
+            return merge(variant.palette.info, { bold = true })
         end,
         groups = {
             "DiagnosticInfo",
@@ -136,7 +108,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.hint, bold = true }
+            return merge(variant.palette.hint, { bold = true })
         end,
         groups = {
             "DiagnosticHint",
@@ -146,7 +118,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.ok, bold = true }
+            return merge(variant.palette.ok, { bold = true })
         end,
         groups = {
             "DiagnosticOk",
@@ -156,7 +128,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.error }
+            return variant.palette.error
         end,
         groups = {
             "DiagnosticVirtualTextError",
@@ -164,7 +136,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.warning }
+            return variant.palette.warning
         end,
         groups = {
             "DiagnosticVirtualTextWarn",
@@ -172,7 +144,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.info }
+            return variant.palette.info
         end,
         groups = {
             "DiagnosticVirtualTextInfo",
@@ -180,7 +152,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.hint }
+            return variant.palette.hint
         end,
         groups = {
             "DiagnosticVirtualTextHint",
@@ -188,7 +160,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { sp = variant.palette.error, undercurl = true }
+            return merge(variant.palette.error, { sp = variant.palette.error.fg, undercurl = true })
         end,
         groups = {
             "DiagnosticUnderlineError",
@@ -196,7 +168,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { sp = variant.palette.warning, undercurl = true }
+            return merge(variant.palette.warning, { sp = variant.palette.warning.fg, undercurl = true })
         end,
         groups = {
             "DiagnosticUnderlineWarn",
@@ -204,7 +176,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { sp = variant.palette.info, undercurl = true }
+            return merge(variant.palette.info, { sp = variant.palette.info.fg, undercurl = true })
         end,
         groups = {
             "DiagnosticUnderlineInfo",
@@ -212,7 +184,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { sp = variant.palette.hint, undercurl = true }
+            return merge(variant.palette.hint, { sp = variant.palette.hint.fg, undercurl = true })
         end,
         groups = {
             "DiagnosticUnderlineHint",
@@ -220,7 +192,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = variant.palette.bg }
+            return variant.palette.main
         end,
         groups = {
             "Normal",
@@ -228,7 +200,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.git_add_bg }
+            return variant.palette.git_add
         end,
         groups = {
             "DiffAdd",
@@ -236,7 +208,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.git_delete_bg }
+            return variant.palette.git_delete
         end,
         groups = {
             "DiffDelete",
@@ -244,7 +216,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.git_change_bg }
+            return variant.palette.git_change
         end,
         groups = {
             "DiffChange",
@@ -252,7 +224,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.git_text_bg, bold = true }
+            return merge(variant.palette.git_text, { bold = true })
         end,
         groups = {
             "DiffText",
@@ -260,7 +232,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_add, bg = normal_bg(variant), bold = true }
+            return merge(variant.palette.git_add, { bg = normal_bg(variant), bold = true })
         end,
         groups = {
             "Added",
@@ -271,7 +243,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_delete, bg = normal_bg(variant), bold = true }
+            return merge(variant.palette.git_delete, { bg = normal_bg(variant), bold = true })
         end,
         groups = {
             "Removed",
@@ -282,7 +254,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_change, bg = normal_bg(variant), bold = true }
+            return merge(variant.palette.git_change, { bg = normal_bg(variant), bold = true })
         end,
         groups = {
             "Changed",
@@ -297,7 +269,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = cursor_fg(variant), bg = variant.palette.cursor, nocombine = true }
+            return { fg = cursor_fg(variant), bg = variant.palette.cursor.bg, nocombine = true }
         end,
         groups = {
             "Cursor",
@@ -309,7 +281,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, bg = normal_bg(variant) }
+            return merge(variant.palette.comment, { bg = normal_bg(variant) })
         end,
         groups = {
             "LineNr",
@@ -324,7 +296,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bg = normal_bg(variant), bold = true }
+            return merge(variant.palette.keyword, { bg = normal_bg(variant), bold = true })
         end,
         groups = {
             "MarkSignHL",
@@ -332,7 +304,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.cursorline }
+            return variant.palette.cursorline
         end,
         groups = {
             "CursorLine",
@@ -343,7 +315,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bg = variant.palette.cursorline, bold = true }
+            return merge(variant.palette.keyword, { bg = variant.palette.cursorline.bg, bold = true })
         end,
         groups = {
             "CursorLineNr",
@@ -351,7 +323,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = variant.palette.cursorline }
+            return merge(variant.palette.main, { bg = variant.palette.cursorline.bg })
         end,
         groups = {
             "LspReferenceText",
@@ -362,7 +334,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = menu_bg(variant) }
+            return merge(variant.palette.main, { bg = menu_bg(variant) })
         end,
         groups = {
             "Pmenu",
@@ -373,7 +345,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = variant.palette.cursorline, bold = true }
+            return merge(variant.palette.main, { bg = variant.palette.cursorline.bg, bold = true })
         end,
         groups = {
             "PmenuSel",
@@ -384,7 +356,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, bg = menu_bg(variant) }
+            return merge(variant.palette.comment, { bg = menu_bg(variant) })
         end,
         groups = {
             "PmenuKind",
@@ -401,7 +373,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, bg = variant.palette.cursorline }
+            return merge(variant.palette.comment, { bg = variant.palette.cursorline.bg })
         end,
         groups = {
             "PmenuExtraSel",
@@ -409,7 +381,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bg = menu_bg(variant), bold = true }
+            return merge(variant.palette.keyword, { bg = menu_bg(variant), bold = true })
         end,
         groups = {
             "BlinkCmpLabelMatch",
@@ -417,7 +389,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = menu_bg(variant) }
+            return merge(variant.palette.main, { bg = menu_bg(variant) })
         end,
         groups = {
             "BlinkCmpLabel",
@@ -425,7 +397,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.type, bg = menu_bg(variant) }
+            return merge(variant.palette.type, { bg = menu_bg(variant) })
         end,
         groups = {
             "BlinkCmpKind",
@@ -442,7 +414,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { bg = variant.palette.comment }
+            return { bg = variant.palette.comment.fg }
         end,
         groups = {
             "PmenuThumb",
@@ -451,7 +423,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = normal_bg(variant) }
+            return merge(variant.palette.main, { bg = normal_bg(variant) })
         end,
         groups = {
             "StatusLine",
@@ -461,7 +433,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, bg = normal_bg(variant) }
+            return merge(variant.palette.comment, { bg = normal_bg(variant) })
         end,
         groups = {
             "StatusLineNC",
@@ -472,7 +444,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg, bg = normal_bg(variant) }
+            return merge(variant.palette.main, { bg = normal_bg(variant) })
         end,
         groups = {
             "NormalFloat",
@@ -482,7 +454,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, bg = normal_bg(variant) }
+            return merge(variant.palette.comment, { bg = normal_bg(variant) })
         end,
         groups = {
             "FloatBorder",
@@ -492,19 +464,12 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.comment, italic = variant.comment_italic or false }
+            return variant.palette.comment
         end,
         groups = {
             "Comment",
             "@comment",
             "@comment.documentation",
-        },
-    },
-    {
-        style = function(variant)
-            return { fg = variant.palette.comment }
-        end,
-        groups = {
             "gitcommitComment",
             "gitcommitOnBranch",
             "gitcommitArrow",
@@ -512,7 +477,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bold = true }
+            return merge(variant.palette.keyword, { bold = true })
         end,
         groups = {
             "@comment.todo",
@@ -520,7 +485,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bold = true }
+            return merge(variant.palette.keyword, { bold = true })
         end,
         groups = {
             "Label",
@@ -530,7 +495,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_change, bold = true }
+            return merge(variant.palette.git_change, { bold = true })
         end,
         groups = {
             "@comment.warning",
@@ -538,7 +503,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.type, bold = true }
+            return merge(variant.palette.type, { bold = true })
         end,
         groups = {
             "PreProc",
@@ -552,7 +517,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.type, bold = true }
+            return merge(variant.palette.type, { bold = true })
         end,
         groups = {
             "@comment.note",
@@ -560,7 +525,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_delete, bold = true }
+            return merge(variant.palette.git_delete, { bold = true })
         end,
         groups = {
             "@comment.error",
@@ -568,7 +533,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.keyword, bold = true }
+            return merge(variant.palette.keyword, { bold = true })
         end,
         groups = {
             "Statement",
@@ -607,7 +572,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg }
+            return variant.palette.main
         end,
         groups = {
             "@tag.attribute",
@@ -622,7 +587,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.type, bold = true }
+            return merge(variant.palette.type, { bold = true })
         end,
         groups = {
             "Type",
@@ -635,7 +600,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.constant or variant.palette.fg, bold = true }
+            return merge(variant.palette.constant or variant.palette.main, { bold = true })
         end,
         groups = {
             "@module",
@@ -644,7 +609,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg }
+            return variant.palette.main
         end,
         groups = {
             "Exception",
@@ -652,7 +617,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.string }
+            return variant.palette.string
         end,
         groups = {
             "String",
@@ -674,7 +639,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.number or variant.palette.fg }
+            return variant.palette.number or variant.palette.main
         end,
         groups = {
             "Number",
@@ -687,7 +652,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.func or variant.palette.fg }
+            return variant.palette.func or variant.palette.main
         end,
         groups = {
             "Function",
@@ -701,7 +666,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.constant or variant.palette.fg }
+            return variant.palette.constant or variant.palette.main
         end,
         groups = {
             "Constant",
@@ -711,7 +676,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.operator or variant.palette.fg }
+            return variant.palette.operator or variant.palette.main
         end,
         groups = {
             "Operator",
@@ -720,7 +685,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.fg }
+            return variant.palette.main
         end,
         groups = {
             "Identifier",
@@ -734,7 +699,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.type, italic = true, bold = true }
+            return merge(variant.palette.type, { italic = true, bold = true })
         end,
         groups = {
             "@type",
@@ -746,7 +711,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.string }
+            return variant.palette.string
         end,
         groups = {
             "gitcommitFile",
@@ -755,7 +720,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_add, bold = true }
+            return merge(variant.palette.git_add, { bold = true })
         end,
         groups = {
             "gitcommitSelectedType",
@@ -765,7 +730,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return { fg = variant.palette.git_delete, bold = true }
+            return merge(variant.palette.git_delete, { bold = true })
         end,
         groups = {
             "Error",
@@ -800,7 +765,11 @@ function M.load(variant_name)
     p = vim.tbl_deep_extend("force", p, config.options.color_overrides)
 
     if config.options.transparent then
-        p.bg = "NONE"
+        p.main.bg = "NONE"
+    end
+
+    if config.options.comment_italic ~= nil then
+        p.comment.italic = config.options.comment_italic
     end
 
     local variant = {
@@ -808,7 +777,6 @@ function M.load(variant_name)
         background = variant_name == "hell" and "light" or "dark",
         palette = p,
         terminal_colors = config.options.terminal_colors,
-        comment_italic = config.options.comment_italic,
         guicursor = config.options.guicursor,
     }
 
@@ -831,22 +799,22 @@ function M.load(variant_name)
 
     -- Terminal colors
     if variant.terminal_colors then
-        vim.g.terminal_color_0 = variant.palette.black
-        vim.g.terminal_color_1 = variant.palette.red
-        vim.g.terminal_color_2 = variant.palette.green
-        vim.g.terminal_color_3 = variant.palette.yellow
-        vim.g.terminal_color_4 = variant.palette.blue
-        vim.g.terminal_color_5 = variant.palette.magenta
-        vim.g.terminal_color_6 = variant.palette.cyan
-        vim.g.terminal_color_7 = variant.palette.white
-        vim.g.terminal_color_8 = variant.palette.comment
-        vim.g.terminal_color_9 = variant.palette.red
-        vim.g.terminal_color_10 = variant.palette.green
-        vim.g.terminal_color_11 = variant.palette.yellow
-        vim.g.terminal_color_12 = variant.palette.blue
-        vim.g.terminal_color_13 = variant.palette.magenta
-        vim.g.terminal_color_14 = variant.palette.cyan
-        vim.g.terminal_color_15 = variant.palette.white
+        vim.g.terminal_color_0 = variant.palette.black.fg
+        vim.g.terminal_color_1 = variant.palette.red.fg
+        vim.g.terminal_color_2 = variant.palette.green.fg
+        vim.g.terminal_color_3 = variant.palette.yellow.fg
+        vim.g.terminal_color_4 = variant.palette.blue.fg
+        vim.g.terminal_color_5 = variant.palette.magenta.fg
+        vim.g.terminal_color_6 = variant.palette.cyan.fg
+        vim.g.terminal_color_7 = variant.palette.white.fg
+        vim.g.terminal_color_8 = variant.palette.comment.fg
+        vim.g.terminal_color_9 = variant.palette.red.fg
+        vim.g.terminal_color_10 = variant.palette.green.fg
+        vim.g.terminal_color_11 = variant.palette.yellow.fg
+        vim.g.terminal_color_12 = variant.palette.blue.fg
+        vim.g.terminal_color_13 = variant.palette.magenta.fg
+        vim.g.terminal_color_14 = variant.palette.cyan.fg
+        vim.g.terminal_color_15 = variant.palette.white.fg
     end
 
     if variant.guicursor == false then
