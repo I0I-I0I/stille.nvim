@@ -28,7 +28,7 @@ Using |lazy.nvim|:
         require("stille").setup({
           -- your configuration here
         })
-        vim.cmd.colorscheme("stille-dark")
+        vim.cmd.colorscheme("stille-dunkel")
       end,
     }
 <
@@ -42,20 +42,20 @@ Using Neovim's built-in package manager:
 To apply the colorscheme, use the `:colorscheme` command. Stille provides
 three variants:
 
-*stille-dark*
-Minimalist dark theme.
+*stille-dunkel*
+Minimalist dunkel theme.
 >vim
-    :colorscheme stille-dark
+    :colorscheme stille-dunkel
 <
-*stille-light*
-Minimalist light theme.
+*stille-hell*
+Minimalist hell theme.
 >vim
-    :colorscheme stille-light
+    :colorscheme stille-hell
 <
-*stille-no-colors*
+*stille-leere*
 Monochrome theme for maximum focus.
 >vim
-    :colorscheme stille-no-colors
+    :colorscheme stille-leere
 <
 ==============================================================================
 3. CONFIGURATION                                               *stille-config*

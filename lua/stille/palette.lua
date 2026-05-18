@@ -2,7 +2,7 @@ local M = {}
 
 ---@type table<string, StillePalette>
 M.palettes = {
-    dark = {
+    dunkel = {
         bg = "#0f0f0f",
         fg = "#ffffff",
 
@@ -40,7 +40,7 @@ M.palettes = {
         cyan = "#a3d5f7",
         white = "#ffffff",
     },
-    light = {
+    hell = {
         bg = "#faf7f0",
         fg = "#1f2430",
 
@@ -78,7 +78,7 @@ M.palettes = {
         cyan = "#5c8c8c",
         white = "#1f2430",
     },
-    ["no-colors"] = {
+    leere = {
         bg = "#000000",
         fg = "#faf7f0",
 

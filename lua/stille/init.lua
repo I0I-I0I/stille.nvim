@@ -805,7 +805,7 @@ function M.load(variant_name)
 
     local variant = {
         name = "stille-" .. variant_name,
-        background = variant_name == "light" and "light" or "dark",
+        background = variant_name == "hell" and "light" or "dark",
         palette = p,
         terminal_colors = config.options.terminal_colors,
         comment_italic = config.options.comment_italic,

@@ -15,7 +15,7 @@ A minimalist, focused colorscheme for Neovim that prioritizes readability and re
     require("stille").setup({
       -- your configuration here
     })
-    vim.cmd.colo("stille-dark") -- or stille-light, stille-no-colors
+    vim.cmd.colo("stille-dunkel") -- or stille-hell, stille-leere
   end,
 }
 ```
@@ -28,47 +28,47 @@ vim.pack.add({ "https://github.com/I0I-I0I/stille.nvim" })
 
 ## Variants
 
-### Stille dark
+### Stille dunkel
 
 ```vim
-:colorscheme stille-dark
+:colorscheme stille-dunkel
 ```
 
 - Editor
 
-![Editor](./assets/stille-dark.png)
+![Editor](./assets/stille-dunkel.png)
 
 - NeoGit
 
-![NeoGit](./assets/stille-dark-git.png)
+![NeoGit](./assets/stille-dunkel-git.png)
 
-### Stille light
+### Stille hell
 
 ```vim
-:colorscheme stille-light
+:colorscheme stille-hell
 ```
 
 - Editor
 
-![Editor](./assets/stille-light.png)
+![Editor](./assets/stille-hell.png)
 
 - NeoGit
 
-![NeoGit](./assets/stille-ligth-git.png)
+![NeoGit](./assets/stille-hell-git.png)
 
-### Stille no colors
+### Stille leere
 
 ```vim
-:colorscheme stille-no-colors
+:colorscheme stille-leere
 ```
 
 - Editor
 
-![Editor](./assets/stille-no-colors.png)
+![Editor](./assets/stille-leere.png)
 
 - NeoGit
 
-![NeoGit](./assets/stille-no-colors-git.png)
+![NeoGit](./assets/stille-leere-git.png)
 
 ## Configuration
 
