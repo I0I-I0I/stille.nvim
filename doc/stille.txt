@@ -1,0 +1,130 @@
+*stille.txt*  A minimalist, focused colorscheme for Neovim.
+
+==============================================================================
+STILLE.NVIM                                                       *stille.nvim*
+
+A minimalist, focused colorscheme for Neovim that prioritizes readability and
+reduces visual noise.
+
+------------------------------------------------------------------------------
+CONTENTS                                                       *stille-contents*
+
+1. Installation .................................. |stille-installation|
+2. Usage ......................................... |stille-usage|
+3. Configuration ................................. |stille-config|
+4. Palette ....................................... |stille-palette|
+5. Supported Plugins ............................. |stille-plugins|
+
+==============================================================================
+1. INSTALLATION                                          *stille-installation*
+
+Using |lazy.nvim|:
+>lua
+    {
+      "your-username/stille.nvim",
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require("stille").setup({
+          -- your configuration here
+        })
+        vim.cmd.colorscheme("stille-dark")
+      end,
+    }
+<
+Using Neovim's built-in package manager:
+>lua
+    vim.pack.add({ "https://github.com/your-username/stille.nvim" })
+<
+==============================================================================
+2. USAGE                                                        *stille-usage*
+
+To apply the colorscheme, use the `:colorscheme` command. Stille provides
+three variants:
+
+*stille-dark*
+Minimalist dark theme.
+>vim
+    :colorscheme stille-dark
+<
+*stille-light*
+Minimalist light theme.
+>vim
+    :colorscheme stille-light
+<
+*stille-no-colors*
+Monochrome theme for maximum focus.
+>vim
+    :colorscheme stille-no-colors
+<
+==============================================================================
+3. CONFIGURATION                                               *stille-config*
+
+Configure the colorscheme by calling `require("stille").setup()`.
+
+Default configuration:
+>lua
+    require("stille").setup({
+      transparent = false,      -- Enable/disable background transparency
+      terminal_colors = true,   -- Enable/disable terminal colors
+      comment_italic = true,    -- Enable/disable italics for comments
+      guicursor = true,         -- Enable/disable cursor styling
+      color_overrides = {},     -- Override specific palette colors
+    })
+<
+------------------------------------------------------------------------------
+OPTIONS                                                       *stille-options*
+
+*stille-config-transparent*
+`transparent` (boolean) Default: `false`
+When true, sets the background to "NONE" for transparency.
+
+*stille-config-terminal-colors*
+`terminal_colors` (boolean) Default: `true`
+When true, sets |g:terminal_color_0| to |g:terminal_color_15|.
+
+*stille-config-comment-italic*
+`comment_italic` (boolean) Default: `true`
+When true, comments are rendered in italics.
+
+*stille-config-guicursor*
+`guicursor` (boolean|string) Default: `true`
+When true, applies the `Cursor` highlight group to the cursor. If a string is
+provided, it sets the 'guicursor' option directly.
+
+*stille-config-color-overrides*
+`color_overrides` (table) Default: `{}`
+A table of color keys and their hex values to override the default palette.
+
+==============================================================================
+4. PALETTE                                                   *stille-palette*
+
+You can override any of the following keys in `color_overrides`:
+
+- `bg`          Background color
+- `fg`          Foreground color
+- `comment`     Comment color
+- `keyword`     Keyword color
+- `type`        Type color
+- `string`      String color
+- `constant`    Constant color
+- `func`        Function color
+- `number`      Number color
+- `operator`    Operator color
+- `cursor`      Cursor color
+- `cursorline`  Cursor line background
+
+Refer to `lua/stille/palette.lua` for the full list of available keys.
+
+==============================================================================
+5. SUPPORTED PLUGINS                                          *stille-plugins*
+
+Stille provides explicit support for the following plugins:
+
+- Neovim Diagnostics
+- Treesitter
+- Blink.cmp
+- Git (via |DiffAdd|, |DiffDelete|, etc.)
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
