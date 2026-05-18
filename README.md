@@ -1,6 +1,9 @@
 # stille.nvim
 
-A minimalist, focused colorscheme for Neovim that prioritizes readability and reduces visual noise.
+**stille** /'ʃtɪlə/ · *noun* — stillness, silence, quietness.
+
+> A minimalist Neovim colorscheme focused on reduction, offering dark, warm
+> light, and absolute monochrome variants.
 
 ## Installation
 
@@ -8,15 +11,15 @@ A minimalist, focused colorscheme for Neovim that prioritizes readability and re
 
 ```lua
 {
-  "I0I-I0i/stille.nvim",
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require("stille").setup({
-      -- your configuration here
-    })
-    vim.cmd.colo("stille-dunkel") -- or stille-hell, stille-leere
-  end,
+    "I0I-I0I/stille.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require("stille").setup({
+                -- your configuration here
+            })
+        vim.cmd.colo("stille-dunkel") -- or stille-hell, stille-leere
+    end,
 }
 ```
 
@@ -24,6 +27,7 @@ A minimalist, focused colorscheme for Neovim that prioritizes readability and re
 
 ```lua
 vim.pack.add({ "https://github.com/I0I-I0I/stille.nvim" })
+vim.cmd.colo("stille-dunkel") -- or stille-hell, stille-leere
 ```
 
 ## Variants
@@ -88,11 +92,11 @@ You can override any color in the palette:
 
 ```lua
 require("stille").setup({
-  color_overrides = {
-    bg = "#000000",
-    fg = "#ffffff",
-    -- see lua/stille/palette.lua for all available keys
-  }
+    color_overrides = {
+        bg = "#000000",
+        fg = "#ffffff",
+        -- see lua/stille/palette.lua for all available keys
+    }
 })
 ```
 
