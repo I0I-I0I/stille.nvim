@@ -78,7 +78,7 @@ end
 local highlight_groups = {
     {
         style = function(variant)
-            return merge(variant.palette.error, { bold = true })
+            return variant.palette.error
         end,
         groups = {
             "DiagnosticError",
@@ -88,7 +88,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.warning, { bold = true })
+            return variant.palette.warning
         end,
         groups = {
             "DiagnosticWarn",
@@ -98,7 +98,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.info, { bold = true })
+            return variant.palette.info
         end,
         groups = {
             "DiagnosticInfo",
@@ -108,7 +108,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.hint, { bold = true })
+            return variant.palette.hint
         end,
         groups = {
             "DiagnosticHint",
@@ -118,7 +118,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.ok, { bold = true })
+            return variant.palette.ok
         end,
         groups = {
             "DiagnosticOk",
@@ -224,7 +224,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.git_text, { bold = true })
+            return variant.palette.git_text
         end,
         groups = {
             "DiffText",
@@ -232,7 +232,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.git_add, { bg = normal_bg(variant), bold = true })
+            return merge(variant.palette.git_add, { bg = normal_bg(variant) })
         end,
         groups = {
             "Added",
@@ -243,7 +243,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.git_delete, { bg = normal_bg(variant), bold = true })
+            return merge(variant.palette.git_delete, { bg = normal_bg(variant) })
         end,
         groups = {
             "Removed",
@@ -254,7 +254,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.git_change, { bg = normal_bg(variant), bold = true })
+            return merge(variant.palette.git_change, { bg = normal_bg(variant) })
         end,
         groups = {
             "Changed",
@@ -296,7 +296,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.keyword, { bg = normal_bg(variant), bold = true })
+            return merge(variant.palette.keyword, { bg = normal_bg(variant) })
         end,
         groups = {
             "MarkSignHL",
@@ -315,7 +315,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.keyword, { bg = variant.palette.cursorline.bg, bold = true })
+            return merge(variant.palette.keyword, { bg = variant.palette.cursorline.bg })
         end,
         groups = {
             "CursorLineNr",
@@ -587,7 +587,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.type, { bold = true })
+            return variant.palette.type
         end,
         groups = {
             "Type",
@@ -600,7 +600,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.constant or variant.palette.main, { bold = true })
+            return variant.palette.constant or variant.palette.main
         end,
         groups = {
             "@module",
@@ -699,7 +699,7 @@ local highlight_groups = {
     },
     {
         style = function(variant)
-            return merge(variant.palette.type, { italic = true, bold = true })
+            return variant.palette.type
         end,
         groups = {
             "@type",
