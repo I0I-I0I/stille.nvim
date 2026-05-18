@@ -21,7 +21,7 @@ CONTENTS                                                       *stille-contents*
 Using |lazy.nvim|:
 >lua
     {
-      "your-username/stille.nvim",
+      "I0I-I0I/stille.nvim",
       lazy = false,
       priority = 1000,
       config = function()
@@ -34,7 +34,7 @@ Using |lazy.nvim|:
 <
 Using Neovim's built-in package manager:
 >lua
-    vim.pack.add({ "https://github.com/your-username/stille.nvim" })
+    vim.pack.add({ "https://github.com/I0I-I0I/stille.nvim" })
 <
 ==============================================================================
 2. USAGE                                                        *stille-usage*
@@ -77,7 +77,7 @@ OPTIONS                                                       *stille-options*
 
 *stille-config-transparent*
 `transparent` (boolean) Default: `false`
-When true, sets the background to "NONE" for transparency.
+When true, sets the background to "NONE" in the main palette.
 
 *stille-config-terminal-colors*
 `terminal_colors` (boolean) Default: `true`
@@ -85,7 +85,7 @@ When true, sets |g:terminal_color_0| to |g:terminal_color_15|.
 
 *stille-config-comment-italic*
 `comment_italic` (boolean) Default: `true`
-When true, comments are rendered in italics.
+When true, sets the 'italic' property in the comment palette.
 
 *stille-config-guicursor*
 `guicursor` (boolean|string) Default: `true`
@@ -94,27 +94,38 @@ provided, it sets the 'guicursor' option directly.
 
 *stille-config-color-overrides*
 `color_overrides` (table) Default: `{}`
-A table of color keys and their hex values to override the default palette.
+A table of color keys and highlight tables (e.g. `{ fg = "#ffffff", bg = "#000000" }`) 
+to override the default palette.
 
 ==============================================================================
 4. PALETTE                                                   *stille-palette*
 
-You can override any of the following keys in `color_overrides`:
+You can override any of the following keys in `color_overrides`. Each key
+expects a highlight table (see |nvim_set_hl|):
 
-- `bg`          Background color
-- `fg`          Foreground color
-- `comment`     Comment color
-- `keyword`     Keyword color
-- `type`        Type color
-- `string`      String color
-- `constant`    Constant color
-- `func`        Function color
-- `number`      Number color
-- `operator`    Operator color
-- `cursor`      Cursor color
-- `cursorline`  Cursor line background
+- `main`        Main background and foreground
+- `comment`     Comment style
+- `keyword`     Keyword style
+- `type`        Type style
+- `string`      String style
+- `constant`    Constant style
+- `func`        Function style
+- `number`      Number style
+- `operator`    Operator style
+- `cursor`      Cursor style
+- `cursorline`  Cursor line style
+- `git_add`     Git added style
+- `git_delete`  Git deleted style
+- `git_change`  Git changed style
+- `git_text`    Git changed text style
+- `error`       Error diagnostic style
+- `warning`     Warning diagnostic style
+- `info`        Info diagnostic style
+- `hint`        Hint diagnostic style
+- `ok`          Ok diagnostic style
 
-Refer to `lua/stille/palette.lua` for the full list of available keys.
+Refer to `lua/stille/palette.lua` for the full list of available keys and
+their default values.
 
 ==============================================================================
 5. SUPPORTED PLUGINS                                          *stille-plugins*

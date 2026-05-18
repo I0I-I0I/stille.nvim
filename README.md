@@ -78,9 +78,9 @@ vim.cmd.colo("stille-dunkel") -- or stille-hell, stille-leere
 
 ```lua
 require("stille").setup({
-    transparent = false,      -- Enable/disable background transparency
+    transparent = false,      -- Set background to "NONE" in main palette
     terminal_colors = true,   -- Enable/disable terminal colors
-    comment_italic = true,    -- Enable/disable italics for comments
+    comment_italic = true,    -- Set italic property in comment palette
     guicursor = true,         -- Enable/disable cursor styling
     color_overrides = {},     -- Override specific palette colors
 })
@@ -88,13 +88,13 @@ require("stille").setup({
 
 ### Color Overrides
 
-You can override any color in the palette:
+You can override any color in the palette using highlight tables:
 
 ```lua
 require("stille").setup({
     color_overrides = {
-        bg = "#000000",
-        fg = "#ffffff",
+        main = { bg = "#000000", fg = "#ffffff" },
+        comment = { fg = "#808080", italic = true },
         -- see lua/stille/palette.lua for all available keys
     }
 })
