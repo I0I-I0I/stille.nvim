@@ -781,17 +781,16 @@ function M.load(variant_name)
     }
 
     vim.cmd("highlight clear")
-    vim.cmd("syntax on")
     if vim.fn.exists("syntax_on") == 1 then
         vim.cmd("syntax reset")
     end
 
-    vim.g.colors_name = variant.name
-    vim.opt.termguicolors = true
-
     if variant.background then
         vim.opt.background = variant.background
     end
+
+    vim.g.colors_name = variant.name
+    vim.opt.termguicolors = true
 
     for _, spec in ipairs(highlight_groups) do
         apply(spec.groups, spec.style(variant))
