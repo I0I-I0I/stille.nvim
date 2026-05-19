@@ -2,9 +2,6 @@
 
 **stille** /'ʃtɪlə/ · *noun* — stillness, silence, quietness.
 
-> A minimalist Neovim colorscheme focused on reduction, offering dark, warm
-> light, and absolute monochrome variants.
-
 ## Installation
 
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
